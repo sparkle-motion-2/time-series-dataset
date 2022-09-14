@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 
 
 class TimeSeriesDataset(object):
-    def __init__(self, data, categorical_cols, target_col, seq_length, prediction_window=1):
+    def __init__(self, data, categorical_cols: list, target_col: list, seq_length: int, prediction_window=1):
         '''
         :param data: dataset of type pandas.DataFrame
         :param categorical_cols: name of the categorical columns, if None pass empty list
@@ -27,7 +27,7 @@ class TimeSeriesDataset(object):
         X = self.data.drop(self.target_col, axis=1)
         y = self.data[self.target_col]
 
-        self.preprocess = ColumnTransformer(
+        self.preprocessor = ColumnTransformer(
             [("scaler", StandardScaler(), self.numerical_cols),
              ("encoder", OneHotEncoder(), self.categorical_cols)],
             remainder="passthrough"
